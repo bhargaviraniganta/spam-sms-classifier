@@ -133,14 +133,14 @@ st.title("Spam SMS Classifier")
 st.write("Type or paste an SMS/email text below and click **Predict**.")
 
 text = st.text_area("Enter message", height=200)
-threshold = st.slider("Spam threshold", 0.0, 1.0, 0.5, 0.01)
+
 
 
 if st.button("Predict"):
     if not text.strip():
         st.warning("Please type an SMS message.")
     else:
-        res = predict_message(text, model, tokenizer, threshold=threshold)
+        res = predict_message(text, model, tokenizer)
         st.markdown(f"**Prediction:** {res['predicted_label'].upper()}")
         st.markdown(f"**Spam probability:** {res['spam_probability']:.4f}")
         st.progress(min(res["spam_probability"], 1.0))
