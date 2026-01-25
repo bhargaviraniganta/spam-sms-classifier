@@ -129,7 +129,7 @@ model, tokenizer = load_model_and_tokenizer()
 # Streamlit UI
 # -------------------------
 st.set_page_config(page_title="Spam SMS Classifier", layout="centered")
-st.title("Spam SMS Classifier (BiLSTM)")
+st.title("Spam SMS Classifier")
 st.write("Type or paste an SMS/email text below and click **Predict**.")
 
 text = st.text_area("Enter message", height=200)
@@ -143,8 +143,9 @@ if st.button("Predict"):
         res = predict_message(text, model, tokenizer, threshold=threshold)
         st.markdown(f"**Prediction:** {res['predicted_label'].upper()}")
         st.markdown(f"**Spam probability:** {res['spam_probability']:.4f}")
+        st.progress(min(res["spam_probability"], 1.0))
+        st.caption("Spam probability indicator")
+
        
-@st.cache_data
-def clean_text_cached(s: str) -> str:
-    return clean_text(s)
+
 
